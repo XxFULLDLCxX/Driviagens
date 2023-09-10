@@ -3,7 +3,7 @@ import Joi from 'joi';
 const name = (field, min, max) => ({
   'string.base': `"${field}" é um campo do tipo texto`,
   'string.empty': `"${field}" deve ter non mínimo ${min} caracteres`,
-  'string.min': `"${field}" deve ter non mínimo ${min} caracteres`,
+  'string.min': `"${field}" deve ter no mínimo ${min} caracteres`,
   'string.max': `"${field}" deve ter no máximo ${max} caracteres`,
   'any.required': `O campo "${field}" é obrigatório`
 });
