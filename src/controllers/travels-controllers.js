@@ -1,4 +1,4 @@
-const create = (res, req) => {
+const create = (req, res) => {
 
 }
 

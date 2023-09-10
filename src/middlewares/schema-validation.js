@@ -5,7 +5,7 @@ export function validateSchema(schema) {
     const validation = schema.validate(req.body, { abortEarly: false });
     if (validation.error) {
       const messages = validation.error.details.reduce((message, detail) => message + detail.message + '\n ', '');
-      console.log(messages);
+      console.log(validation.error);
       throw errors.schema(messages);
     }
 

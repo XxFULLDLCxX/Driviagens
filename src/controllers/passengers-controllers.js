@@ -6,7 +6,7 @@ const create = async (req, res) => {
   res.sendStatus(201);
 };
 
-const read = (res, req) => {
+const read = (req, res) => {
 
 };
 
