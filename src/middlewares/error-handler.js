@@ -15,6 +15,10 @@ export function errorHandler(error, req, res, next) {
       return res.status(httpStatus.NOT_FOUND).send('A origem não é uma cidade conhecida');
     if (error.constraint === 'flights_destination_fkey')
       return res.status(httpStatus.NOT_FOUND).send('O destino não é uma cidade conhecida');
+    if (error.constraint === 'travels_passengerId_fkey')
+      return res.status(httpStatus.NOT_FOUND).send('O passageiro com o passengerId não foi encontrado');
+    if (error.constraint === 'travels_flightId_fkey')
+      return res.status(httpStatus.NOT_FOUND).send('O voo com o flightId não foi encontrado');
   }
 
   return res.status(httpStatus.INTERNAL_SERVER_ERROR).send('Ocorreu um erro desconhecido!');

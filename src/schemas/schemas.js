@@ -1,5 +1,5 @@
-import JoiBase from 'joi';
 import JoiDate from '@joi/date';
+import JoiBase from 'joi';
 
 const Joi = JoiBase.extend(JoiDate);
 
@@ -39,6 +39,19 @@ const flights = Joi.object({
   })
 });
 
+const travels = Joi.object({
+  passengerId: Joi.number().integer().greater(0).required().messages({
+    'number.integer': `"passengerId" é um id, inteiro maior que zero`,
+    'number.greater': `"passengerId" é um id, inteiro maior que zero`,
+    'any.required': `"passengerId" é obrigatório`
+  }),
+  flightId: Joi.number().integer().greater(0).required().messages({
+    'number.integer': `"flightId" é um id, inteiro maior que zero`,
+    'number.greater': `"flightId" é um id, inteiro maior que zero`,
+    'any.required': `"flightId" é obrigatório`
+  })
+});
+
 export const schemas = {
-  passengers, cities, flights
+  passengers, cities, flights, travels
 };
