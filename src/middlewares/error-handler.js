@@ -5,8 +5,10 @@ export function errorHandler(error, req, res, next) {
 
   if (error.type === 'conflict')
     return res.status(httpStatus.CONFLICT).send(error.message);
-  if (error.type === 'joi-error')
+  if (error.type === 'joi-error' || error.type === 'unprocessable-entity')
     return res.status(httpStatus.UNPROCESSABLE_ENTITY).send(error.message);
+  if (error.type === 'bad-request')
+    return res.status(httpStatus.BAD_REQUEST).send(error.message);
 
   if (error.code === '23505' && error.constraint === 'cities_name_key')
     return res.status(httpStatus.CONFLICT).send('Está cidade já foi adicionada!');

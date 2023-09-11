@@ -20,23 +20,50 @@ const cities = Joi.object({
   name: Joi.string().min(2).max(50).required().messages(string('O nome da cidade', 2, 50))
 });
 
+const date = (field) => ({
+  'date.base': `"${field}" deve ser uma data válida (DD-MM-AAAA)`,
+  'date.format': `"${field}" deve ter o formato: DD-MM-AAAA`
+});
+
 const flights = Joi.object({
   origin: Joi.number().integer().greater(0).required().messages({
     'number.integer': `A origem é um id, inteiro maior que zero`,
     'number.greater': `A origem é um id, inteiro maior que zero`,
-    'any.required': `A origem do voo é obrigatória`
+    'any.required': `"origin" é obrigatória`
   }),
   destination: Joi.number().integer().greater(0).required().messages({
     'number.integer': `A origem é um id, inteiro maior que zero`,
     'number.greater': `A origem é um id, inteiro maior que zero`,
-    'any.required': `O destino do voo é obrigatório`
+    'any.required': `"destination" é obrigatório`
   }),
   date: Joi.date().min('now').format('DD-MM-YYYY').required().messages({
-    'date.base': `A data do voo deve ser uma data válida (DD-MM-AAAA)`,
-    'date.min': `A data do voo deve ser maior do que a data atual`,
-    'date.format': `O formatdo da data deve ser: DD-MM-AAAA`,
-    'any.required': `A data do voo é obrigatória`
-  })
+    ...date('date'),
+    'date.min': `"date" deve ser maior do que a data atual`,
+    'any.required': `"date" é obrigatório`
+  }),
+});
+
+const query = Joi.object({
+  'bigger-date': Joi.alternatives().conditional('smaller-date', {
+    is: Joi.exist(),
+
+    then: Joi.date().format('DD-MM-YYYY'),
+    otherwise: Joi.forbidden()
+  }).messages({
+    ...date('bigger-date'),
+    'any.unknown': `"bigger_date" não pode ser definido sem "smaller_date"`
+  }),
+  'smaller-date': Joi.alternatives().conditional('bigger-date', {
+    is: Joi.exist(),
+    then: Joi.date().max(Joi.ref('bigger-date')).format('DD-MM-YYYY'),
+    otherwise: Joi.forbidden()
+  }).messages({
+    ...date('bigger-date'),
+    'date.max': `"smaller-date" deve ser menor do que "bigger-date"`,
+    'any.unknown': `"smaller_date" não pode ser definido sem "bigger_date"`
+  }),
+  'origin': Joi.string().messages({ 'string.empty': `"origin" deve ser um nome de uma cidade` }),
+  'destination': Joi.string().messages({ 'string.empty': `"destination" deve ser um nome de uma cidade` })
 });
 
 const travels = Joi.object({
@@ -53,5 +80,5 @@ const travels = Joi.object({
 });
 
 export const schemas = {
-  passengers, cities, flights, travels
+  passengers, cities, flights, travels, query
 };

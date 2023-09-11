@@ -1,5 +1,5 @@
 const schema = (message) => ({
-  type: 'joi-error',
+  type: 'joi-error', 
   message
 });
 
@@ -8,6 +8,16 @@ const conflict = (message) => ({
   message
 });
 
+const unprocessableEntity = (message) => ({
+  type: 'unprocessable-entity',
+  message
+});
+
+const badRequest = (message) => ({
+  type: 'bad-request',
+  message
+});
+
 export const errors = {
-  schema, conflict
+  schema, conflict, unprocessableEntity, badRequest
 };

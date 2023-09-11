@@ -6,10 +6,12 @@ const create = async (req, res) => {
   res.sendStatus(201);
 }
 
-const read = (req, res) => {
-
+const read = async (req, res) => {
+  const { origin, destination, 'bigger-date': bigger_date, 'smaller-date': smaller_date } = req.query;
+  const flights = await flights_service.read(origin, destination, bigger_date, smaller_date);
+  res.send(flights);
 }
 
 export const flights_controller = {
-  create
+  create, read
 }
