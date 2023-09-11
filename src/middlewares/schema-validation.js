@@ -21,7 +21,7 @@ export function validateQuery(schema) {
     if (validation.error) {
       const messages = validation.error.details.reduce((message, detail) => message + detail.message + '\n ', '');
       console.log(validation.error.details[0].type);
-      if (validation.error.details[0].type === 'date.min' || validation.error.details[0].type === 'date.max')
+      if (validation.error.details[0].type === 'date.min' || validation.error.details[0].type === 'date.max' || validation.error.details[0].type === 'number.greater')
         throw errors.badRequest(messages);
       else throw errors.schema(messages);
     }

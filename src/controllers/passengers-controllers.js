@@ -6,8 +6,10 @@ const create = async (req, res) => {
   res.sendStatus(201);
 };
 
-const read = (req, res) => {
-
+const read = async (req, res) => {
+  const { name, page } = req.query;
+  const result = await passengers_service.read(name, page);
+  res.send(result);
 };
 
 export const passengers_controller = {

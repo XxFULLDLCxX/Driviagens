@@ -7,9 +7,10 @@ const create = (origin, destination, date) => {
 };
 
 
-const read = (origin, destination, bigger_date, smaller_date) => {
-  const SQL_ARGS = [];
-  let SQL_FILTER = ``;
+const read = (origin, destination, bigger_date, smaller_date, page) => {
+  let SQL_ARGS = [];
+  let SQL_FILTER = '';
+  let SQL_PAGE = '';
 
   if (origin) {
     SQL_ARGS.push(origin);
@@ -28,13 +29,21 @@ const read = (origin, destination, bigger_date, smaller_date) => {
     SQL_FILTER += `${(SQL_FILTER.includes('WHERE') ? 'AND ' : 'WHERE ')} date >= TO_DATE($${SQL_ARGS.length}, 'DD-MM-YYYY')`;
   }
 
+  if (page) {
+    SQL_ARGS.push((Number(page) - 1) * 10);
+    SQL_PAGE += `OFFSET $${SQL_ARGS.length}`;
+  }
+
   const SQL_BASE = `
   SELECT flights.id, city1.name origin, city2.name destination, 
    TO_CHAR("date", 'DD-MM-YYYY') "date" FROM "flights"
   JOIN cities AS city1 ON origin = city1.id
   JOIN cities AS city2 ON destination = city2.id
   ${SQL_FILTER}
-  ORDER BY date`;
+  ORDER BY date
+  LIMIT 10
+  ${SQL_PAGE}
+  `;
 
   let SQL_FINAL = SQL_BASE + ';';
   return db.query(

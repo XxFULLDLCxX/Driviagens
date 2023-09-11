@@ -12,5 +12,5 @@ routes.post("/passengers", validateBody(schemas.passengers), passengers_controll
 routes.post("/cities", validateBody(schemas.cities), cities_controller.create);
 routes.post("/flights", validateBody(schemas.flights), flights_controller.create);
 routes.post("/travels", validateBody(schemas.travels), travels_controller.create);
-routes.get("/flights", validateQuery(schemas.query), flights_controller.read);
-routes.get("/passengers/travels",);
+routes.get("/flights", validateQuery(schemas.query_flights), flights_controller.read);
+routes.get("/passengers/travels", validateQuery(schemas.query_passengers), passengers_controller.read);

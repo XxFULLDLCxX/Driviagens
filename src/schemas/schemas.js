@@ -43,7 +43,7 @@ const flights = Joi.object({
   }),
 });
 
-const query = Joi.object({
+const query_flights = Joi.object({
   'bigger-date': Joi.alternatives().conditional('smaller-date', {
     is: Joi.exist(),
 
@@ -63,7 +63,15 @@ const query = Joi.object({
     'any.unknown': `"smaller_date" não pode ser definido sem "bigger_date"`
   }),
   'origin': Joi.string().messages({ 'string.empty': `"origin" deve ser um nome de uma cidade` }),
-  'destination': Joi.string().messages({ 'string.empty': `"destination" deve ser um nome de uma cidade` })
+  'destination': Joi.string().messages({ 'string.empty': `"destination" deve ser um nome de uma cidade` }),
+  'page': Joi.number().integer().greater(0)
+});
+
+const query_passengers = Joi.object({
+  'name': Joi.string(),
+  'page': Joi.number().integer().greater(0).messages({
+    'number.greater': 'Invalid page value'
+  })
 });
 
 const travels = Joi.object({
@@ -80,5 +88,5 @@ const travels = Joi.object({
 });
 
 export const schemas = {
-  passengers, cities, flights, travels, query
+  passengers, cities, flights, travels, query_flights, query_passengers
 };

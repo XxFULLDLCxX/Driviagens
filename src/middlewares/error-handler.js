@@ -9,6 +9,8 @@ export function errorHandler(error, req, res, next) {
     return res.status(httpStatus.UNPROCESSABLE_ENTITY).send(error.message);
   if (error.type === 'bad-request')
     return res.status(httpStatus.BAD_REQUEST).send(error.message);
+  if (error.type === 'internal-server') 
+    return res.status(httpStatus.INTERNAL_SERVER_ERROR).send(error.message)
 
   if (error.code === '23505' && error.constraint === 'cities_name_key')
     return res.status(httpStatus.CONFLICT).send('Está cidade já foi adicionada!');

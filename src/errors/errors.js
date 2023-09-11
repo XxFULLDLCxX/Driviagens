@@ -18,6 +18,11 @@ const badRequest = (message) => ({
   message
 });
 
+const internalServer = () => ({
+  type: 'internal-server',
+  message: 'Too many results'
+})
+
 export const errors = {
-  schema, conflict, unprocessableEntity, badRequest
+  schema, conflict, unprocessableEntity, badRequest, internalServer
 };
