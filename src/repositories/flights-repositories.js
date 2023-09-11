@@ -31,7 +31,7 @@ const read = (origin, destination, bigger_date, smaller_date, page) => {
 
   if (page) {
     SQL_ARGS.push((Number(page) - 1) * 10);
-    SQL_PAGE += `OFFSET $${SQL_ARGS.length}`;
+    SQL_PAGE += `LIMIT 10 OFFSET $${SQL_ARGS.length}`;
   }
 
   const SQL_BASE = `
@@ -40,8 +40,7 @@ const read = (origin, destination, bigger_date, smaller_date, page) => {
   JOIN cities AS city1 ON origin = city1.id
   JOIN cities AS city2 ON destination = city2.id
   ${SQL_FILTER}
-  ORDER BY date
-  LIMIT 10
+  ORDER BY flights."date" ASC
   ${SQL_PAGE}
   `;
 

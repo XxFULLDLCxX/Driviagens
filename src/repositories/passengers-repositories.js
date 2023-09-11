@@ -15,18 +15,16 @@ const read = (name, page) => {
   }
   if (page) {
     SQL_ARGS.push((Number(page) - 1) * 10);
-    SQL_PAGE += `OFFSET $${SQL_ARGS.length}`;
+  SQL_PAGE += `LIMIT 10 OFFSET $${SQL_ARGS.length}`;
   }
 
   let SQL_BASE = `
-  SELECT "firstName" || ' ' || "lastName" AS "passenger", COUNT(*) "travels" FROM "passengers"
-  JOIN "travels" ON "travels"."passengerId" = "passengers".id
+  SELECT "firstName" || ' ' || "lastName" AS "passenger", COUNT("passengerId") "travels" FROM "passengers"
+  LEFT JOIN "travels" ON "passengerId" = "passengers".id
   ${SQL_FILTER}
   GROUP BY "passengers".id
   ORDER BY "travels" DESC
-  LIMIT 10
-  ${SQL_PAGE}
-  ;`;
+  ${SQL_PAGE}`;
 
   let SQL_FINAL = SQL_BASE + ';';
   return db.query(
