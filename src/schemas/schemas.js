@@ -5,7 +5,7 @@ const Joi = JoiBase.extend(JoiDate);
 
 const string = (field, min, max) => ({
   'string.base': `"${field}" é do tipo texto`,
-  'string.empty': `"${field}" deve ter non mínimo ${min} caracteres`,
+  'string.empty': `"${field}" deve ter no mínimo ${min} caracteres`,
   'string.min': `"${field}" deve ter no mínimo ${min} caracteres`,
   'string.max': `"${field}" deve ter no máximo ${max} caracteres`,
   'any.required': `"${field}" é obrigatório`
