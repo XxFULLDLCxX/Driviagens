@@ -12,12 +12,12 @@ const string = (field, min, max) => ({
 });
 
 const passengers = Joi.object({
-  firstName: Joi.string().min(2).max(100).required().messages(string('O primeiro nome', 2, 100)),
-  lastName: Joi.string().min(2).max(100).required().messages(string('O último nome', 2, 100))
+  firstName: Joi.string().min(2).max(100).required().messages(string('firstName', 2, 100)),
+  lastName: Joi.string().min(2).max(100).required().messages(string('lastName', 2, 100))
 });
 
 const cities = Joi.object({
-  name: Joi.string().min(2).max(50).required().messages(string('O nome da cidade', 2, 50))
+  name: Joi.string().min(2).max(50).required().messages(string('name', 2, 50))
 });
 
 const date = (field) => ({
@@ -27,13 +27,13 @@ const date = (field) => ({
 
 const flights = Joi.object({
   origin: Joi.number().integer().greater(0).required().messages({
-    'number.integer': `A origem é um id, inteiro maior que zero`,
-    'number.greater': `A origem é um id, inteiro maior que zero`,
+    'number.integer': `"origin" é um id, inteiro maior que zero`,
+    'number.greater': `"origin" é um id, inteiro maior que zero`,
     'any.required': `"origin" é obrigatória`
   }),
   destination: Joi.number().integer().greater(0).required().messages({
-    'number.integer': `A origem é um id, inteiro maior que zero`,
-    'number.greater': `A origem é um id, inteiro maior que zero`,
+    'number.integer': `"destination" é um id, inteiro maior que zero`,
+    'number.greater': `"destination" é um id, inteiro maior que zero`,
     'any.required': `"destination" é obrigatório`
   }),
   date: Joi.date().min('now').format('DD-MM-YYYY').required().messages({
